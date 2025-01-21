@@ -32,7 +32,7 @@ for (f in res.dir) if (!dir.exists(f)) dir.create(path = f, recursive = TRUE)
 sce <- readRDS(file = file.path("results/01_figure_1/objects", "sce_int.rds"))
 
 # Top 3 coefficients
-top.coeff <- read.table(file = "results/01_figure_1/tables/top10_positive_coefficients_by_cluster_divisive_ICP_L4_table.tsv", 
+top.coeff <- read.table(file = "results/01_figure_1/tables/top10_positive_coefficients_by_cluster_divisive_ICP_L2_table.tsv", 
                         header = TRUE, sep = "\t")
 pick.genes <- top.coeff %>% 
   mutate("idx" = 1:nrow(.)) %>% 

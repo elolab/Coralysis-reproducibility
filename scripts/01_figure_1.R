@@ -155,7 +155,7 @@ sce <- RunTSNE(object = sce, dims = pcs, dimred.type = "unintPCA", dimred.name =
 # Plot t-SNE
 unint.plts <- lapply(setNames(c(batch.label, cell.label), c(batch.label, cell.label)), function(x) {
   PlotDimRed(object = sce, color.by = x, dimred = "unintTSNE", use.color = colors[[x]], 
-             point.size = 0.75, point.stroke = 0, plot.theme = theme_void()) + 
+             point.size = 0.5, point.stroke = 0, plot.theme = theme_void()) + 
     guides(color = guide_legend(title = "", nrow = 6, bycol = TRUE, override.aes = list(size=4))) + 
     theme(legend.position = "bottom", legend.box.margin = margin(0, 0, 0, 0),
           legend.key.size = unit(0.1, 'mm'), legend.justification = "left",
@@ -167,7 +167,6 @@ dev.off()
 unint.plts.together <- cowplot::plot_grid((unint.plts$Sample + ggtitle("Unintegrated") +
                                              theme(plot.title = element_text(hjust=0.5))),
                                           unint.plts$cell_type, ncol = 1, align = "vh")
-
 #
 #------------------------------------------------------------------------------#
 
@@ -200,7 +199,7 @@ saveRDS(object = sce, file = file.path(res.dir[3], "sce_int.rds"))
 # Plots
 int.plts <- lapply(setNames(c(batch.label, cell.label), c(batch.label, cell.label)), function(x) {
   PlotDimRed(object = sce, color.by = x, dimred = "intTSNE", use.color = colors[[x]],
-             point.size = 0.75, legend.nrow = 4, point.stroke = 0, plot.theme = theme_void()) + 
+             point.size = 0.5, legend.nrow = 4, point.stroke = 0, plot.theme = theme_void()) + 
     guides(color = guide_legend(title = "", nrow = 6, bycol = TRUE, override.aes = list(size=4))) + 
     theme(legend.position = "bottom", legend.box.margin = margin(0, 0, 0, 0),
           legend.key.size = unit(0.1, 'mm'), legend.justification = "left",
@@ -236,10 +235,10 @@ clt.tree.plts[["celltype"]] <- PlotClusterTree(object = sce, color.by = cell.lab
 pdf(file = file.path(res.dir[1], paste0("median_cluster_probability_tree_L", max.sd, ".pdf")), width = 6, height = 4)
 clt.tree.plts[["median_cluster_probability"]]
 dev.off()
-pdf(file = file.path(res.dir[1], "batch_cluster_tree_L4.pdf"), width = 8, height = 5)
+pdf(file = file.path(res.dir[1], paste0("batch_cluster_tree_L", max.sd, ".pdf")), width = 8, height = 5)
 clt.tree.plts[["batch"]]
 dev.off()
-pdf(file = file.path(res.dir[1], "celltype_cluster_tree_L4.pdf"), width = 8, height = 5)
+pdf(file = file.path(res.dir[1], paste0("celltype_cluster_tree_L", max.sd, ".pdf")), width = 8, height = 5)
 clt.tree.plts[["celltype"]]
 dev.off()
 #
@@ -264,7 +263,7 @@ for (k in K) { # ICP rounds
   # Plots
   plts[[k.round]][["batch"]] <- PlotDimRed(object = sce, color.by = batch.label, 
                                            use.color = colors[[batch.label]], 
-                                           dimred = "tsne", point.size = 0.75,
+                                           dimred = "tsne", point.size = 0.5,
                                            point.stroke = 0, plot.theme = theme_void(),
                                            legend.nrow = 4) + 
     ggtitle(paste("Cluster target:", 2**k)) +
@@ -273,7 +272,7 @@ for (k in K) { # ICP rounds
     annotate(geom = "segment", y = -Inf, yend = Inf, color = "gray", x = Inf, xend = Inf, linewidth = 0.5)
   plts[[k.round]][["celltype"]] <- PlotDimRed(object = sce, color.by = cell.label, 
                                               use.color = colors[[cell.label]], 
-                                              dimred = "tsne", point.size = 0.75, 
+                                              dimred = "tsne", point.size = 0.5, 
                                               point.stroke = 0, plot.theme = theme_void(),
                                               legend.nrow = 4) + 
     theme(legend.position = "none", plot.margin = unit(c(0, 0, 0, 0), "cm")) + 
