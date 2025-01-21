@@ -1,6 +1,6 @@
 #------------------------------------------------------------------------------#
 # Author: António Sousa (e-mail: aggode@utu.fi)
-# Description: R script to make Figure 1 and Extended Data Figure 2. 
+# Description: R script to make Figure 1. 
 # Date: 20/01/2025
 # Last update: 20/01/2025
 #------------------------------------------------------------------------------#
