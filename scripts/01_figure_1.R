@@ -223,7 +223,7 @@ L <- metadata(sce)$coralysis$L
 K <- 1:by
 pick.k16 <- seq(by, L*by, by)
 probs <- GetCellClusterProbability(object = sce, icp.round = 4, concatenate = FALSE)
-max.sd <- which.max(unlist(lapply(probs, sd))) # L = 4 (ICP model)
+max.sd <- which.max(unlist(lapply(probs, sd))) # L = 2 (ICP model)
 
 # Plot cluster trees based on previous function
 clt.tree.plts <- list()
@@ -285,23 +285,24 @@ cowplot::plot_grid(plts$`2`$batch, plts$`4`$batch, plts$`8`$batch, plts$`16`$bat
 dev.off()
 
 # Plot clustering & probability for the ICP run w/ highest SD
-sce <- SummariseCellClusterProbability(object = sce, icp.run = 4, icp.round = 4, scale.funs = FALSE, save.in.sce = TRUE)
-sce$icp_run_round_4_4_clusters <- factor(sce$icp_run_round_4_4_clusters, levels = as.character(1:16))
+sce <- SummariseCellClusterProbability(object = sce, icp.run = max.sd, icp.round = 4, scale.funs = FALSE, save.in.sce = TRUE)
+icp.cluster <- paste0("icp_run_round_", max.sd, "_4_clusters")
+sce[[icp.cluster]] <- factor(sce[[icp.cluster]], levels = as.character(1:16))
 # Cluster
-plts[[k.round]][["cluster"]] <- PlotDimRed(object = sce, color.by = "icp_run_round_4_4_clusters", dimred = "tsne", 
+plts[[k.round]][["cluster"]] <- PlotDimRed(object = sce, color.by = icp.cluster, dimred = "tsne", 
                                            use.color = NULL, point.size = 0.5, point.stroke = 0, 
                                            legend.nrow = 4, seed = 1024, plot.theme = theme_void(), 
                                            label = TRUE) + 
   theme(plot.margin = unit(c(0, 0, 0, 0), "cm"), legend.position = "none") 
-plts[[k.round]][["cluster"]] <- PlotDimRed(object = sce, color.by = "icp_run_round_4_4_clusters", dimred = "tsne", 
+plts[[k.round]][["cluster"]] <- PlotDimRed(object = sce, color.by = icp.cluster, dimred = "tsne", 
                                            use.color = NULL, point.size = 0.5, point.stroke = 0, 
                                            legend.nrow = 4, seed = 1024, plot.theme = theme_void(), 
                                            label = FALSE) + 
   theme(plot.margin = unit(c(0, 0, 0, 0), "cm"), legend.position = "none") +
   geom_label(data = plts[[k.round]][["cluster"]]$data, mapping = aes(label = label), size = 2.5)
 # Probability
-plts[[k.round]][["prob"]] <- PlotExpression(object = sce, color.by = "icp_run_round_4_4_probs", dimred = "tsne", 
-                                            color.scale = "viridis", point.stroke = 0, point.size = 0.5, 
+plts[[k.round]][["prob"]] <- PlotExpression(object = sce, color.by = paste0("icp_run_round_", max.sd, "_4_probs"), 
+                                            dimred = "tsne", color.scale = "viridis", point.stroke = 0, point.size = 0.5, 
                                             plot.theme = theme_void()) + 
   scale_color_viridis_c(limits = c(0, 1)) + 
   theme(legend.position = "none", plot.margin = unit(c(0, 0, 0, 0), "cm"), 
@@ -341,7 +342,7 @@ dev.off()
 ## Figure 1 F
 
 ## Looking into the coefficients for L ICP run with the maximum SD
-gene.coeff <- GetFeatureCoefficients(object = sce, icp.run = 4)
+gene.coeff <- GetFeatureCoefficients(object = sce, icp.run = max.sd)
 
 # Parse top 10 positive gene coefficients per ICP round per cluster
 n.row <- 10 * sum(c(1, 4, 8, 16))
@@ -381,7 +382,7 @@ names(cluster.colors) <- as.character(1:16)
 Kannot <- as.factor(data.coeff$K)
 levels(Kannot) <- paste0("K", levels(Kannot))
 avg.gexp <- Coralysis:::AggregateClusterExpression(mtx = logcounts(sce[data.coeff$gene]), 
-                                                   cluster = sce$icp_run_round_4_4_clusters)
+                                                   cluster = sce[[icp.cluster]])
 colnames(avg.gexp) <- gsub("cluster", "", colnames(avg.gexp))
 pick.genes <- data.coeff %>% 
   mutate("idx" = 1:nrow(.)) %>% 
