@@ -10,3 +10,4 @@ rsessions
 .ssh
 .bash_history
 .Rhistory
+.conda
