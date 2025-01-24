@@ -296,6 +296,8 @@ dev.off()
 
 #------------------------------------------------------------------------------#
 #
+## Extended Data Figure 6 C
+
 ## Plot accuracy cell-specific scores
 acc.cell.spec.scores <- lapply(res, function(x) x$acc_cellspec)
 acc.cell.spec.scores <- data.frame(acc.cell.spec.scores)
@@ -383,7 +385,9 @@ p2 <- cowplot::plot_grid(NULL,
                                  legend.title = element_text(size = 11), 
                                  legend.spacing.y = unit(0, "cm"), 
                                  legend.margin=margin(0, 0, 0.2, 0, unit='cm'), 
-                                 legend.position = c(0.88, 0.4)), 
+                                 legend.position = c(0.88, 0.4), 
+                                 legend.key = element_blank(), 
+                                 legend.background = element_blank()), 
                          NULL, NULL,
                          rel_heights = c(0.25, 0.001, 0.3, 0.02), rel_widths = c(0.02, 0.8),
                          ncol = 2, labels = c("", "B", "", "", "", "C", "", ""), 
