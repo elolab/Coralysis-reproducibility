@@ -176,7 +176,7 @@ for (cell in cell.types) {
   top.hvg <- row.names(ref)[hvg.ordered[1:nhvg]]
   ref <- ref[top.hvg,]
   set.seed(123)
-  ref <- RunParallelDivisiveICP(object = ref, verbose = TRUE) # train
+  ref <- RunParallelDivisiveICP(object = ref, threads = 4) # train
   ref <- RunPCA(object = ref, return.model = TRUE) # PCA
   ref <- RunUMAP(ref, return.model = TRUE) # UMAP
   map <- ReferenceMapping(ref = ref, query = sce$query, ref.label = cell.label, project.umap = TRUE) # query-to-ref mapping
