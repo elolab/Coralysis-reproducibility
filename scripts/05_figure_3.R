@@ -21,8 +21,8 @@ library("SingleCellExperiment") # v.1.20.1
 #require("zellkonverter") # v.1.8.0
 #require("Seurat") # v.4.3.0
 #require("scran") # v.1.26.2
-#require("bluster") # v.
-#require("cowplot") # v.
+#require("bluster") # v.1.8.0
+#require("cowplot") # v.1.1.1
  
 # Folders to save results 
 analysis <- "05_figure_3"

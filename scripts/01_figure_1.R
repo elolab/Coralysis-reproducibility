@@ -16,6 +16,7 @@ library("Coralysis") # v.1.0.0
 library("ComplexHeatmap") # v.2.14.0
 library("SingleCellExperiment") # v.1.20.1
 source("scripts/helper_functions.R") 
+#require("cowplot") # v.1.1.1
 
 # Folders to save results 
 analysis <- "01_figure_1"
