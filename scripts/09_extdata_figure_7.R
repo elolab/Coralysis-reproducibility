@@ -427,5 +427,49 @@ gc()
 #
 ## Session
 sessionInfo()
+# R version 4.2.1 (2022-06-23)
+# Platform: x86_64-pc-linux-gnu (64-bit)
+# Running under: Ubuntu 20.04.5 LTS
+# 
+# Matrix products: default
+# BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3
+# LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/liblapack.so.3
+# 
+# locale:
+#   [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C               LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+# [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8    LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+# [9] LC_ADDRESS=C               LC_TELEPHONE=C             LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+# 
+# attached base packages:
+#   [1] stats4    stats     graphics  grDevices utils     datasets  methods   base     
+# 
+# other attached packages:
+#   [1] SingleCellExperiment_1.20.1 SummarizedExperiment_1.28.0 Biobase_2.58.0              GenomicRanges_1.50.2       
+# [5] GenomeInfoDb_1.34.9         IRanges_2.32.0              S4Vectors_0.36.2            BiocGenerics_0.44.0        
+# [9] MatrixGenerics_1.10.0       matrixStats_1.1.0           Coralysis_1.0.0             ggplot2_3.5.1              
+# [13] dplyr_1.1.1                
+# 
+# loaded via a namespace (and not attached):
+#   [1] ggbeeswarm_0.7.1          colorspace_2.1-0          class_7.3-20              modeltools_0.2-23         scuttle_1.8.4            
+# [6] bluster_1.8.0             XVector_0.38.0            BiocNeighbors_1.16.0      rstudioapi_0.14           farver_2.1.1             
+# [11] ggrepel_0.9.3             RSpectra_0.16-1           fansi_1.0.4               codetools_0.2-18          sparseMatrixStats_1.10.0 
+# [16] scater_1.26.1             polyclip_1.10-4           jsonlite_1.8.4            Cairo_1.6-0               umap_0.2.10.0            
+# [21] cluster_2.1.3             png_0.1-8                 pheatmap_1.0.12           uwot_0.1.14               ggforce_0.4.1            
+# [26] compiler_4.2.1            dqrng_0.3.0               Matrix_1.6-5              limma_3.54.2              aricode_1.0.2            
+# [31] cli_3.6.1                 tweenr_2.0.3              BiocSingular_1.14.0       tools_4.2.1               rsvd_1.0.5               
+# [36] igraph_1.4.1              gtable_0.3.3              glue_1.6.2                GenomeInfoDbData_1.2.9    RANN_2.6.1               
+# [41] reshape2_1.4.4            LiblineaR_2.10-22         doRNG_1.8.6               Rcpp_1.0.10               vctrs_0.6.1              
+# [46] iterators_1.0.14          DelayedMatrixStats_1.20.0 stringr_1.5.0             beachmat_2.14.0           lifecycle_1.0.3          
+# [51] irlba_2.3.5.1             rngtools_1.5.2            statmod_1.5.0             edgeR_3.40.2              zlibbioc_1.44.0          
+# [56] MASS_7.3-57               scales_1.3.0              doSNOW_1.0.20             parallel_4.2.1            SparseM_1.81             
+# [61] RColorBrewer_1.1-3        reticulate_1.34.0         gridExtra_2.3             ggrastr_1.0.1             stringi_1.7.12           
+# [66] foreach_1.5.2             ScaledMatrix_1.6.0        scran_1.26.2              BiocParallel_1.32.6       rlang_1.1.0              
+# [71] pkgconfig_2.0.3           bitops_1.0-7              lattice_0.20-45           purrr_1.0.1               patchwork_1.2.0          
+# [76] labeling_0.4.2            cowplot_1.1.1             tidyselect_1.2.0          plyr_1.8.8                magrittr_2.0.3           
+# [81] R6_2.5.1                  snow_0.4-4                generics_0.1.3            metapod_1.6.0             DelayedArray_0.24.0      
+# [86] pillar_1.9.0              withr_2.5.0               RCurl_1.98-1.10           tibble_3.2.1              crayon_1.5.2             
+# [91] utf8_1.2.3                viridis_0.6.2             locfit_1.5-9.7            grid_4.2.1                flexclust_1.4-1          
+# [96] FNN_1.1.3.2               digest_0.6.31             tidyr_1.3.0               openssl_2.0.6             munsell_0.5.0            
+# [101] beeswarm_0.4.0            viridisLite_0.4.1         vipor_0.4.5               askpass_1.1    
 #
 #------------------------------------------------------------------------------#
