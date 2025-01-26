@@ -458,5 +458,46 @@ gc()
 #
 ## Session
 sessionInfo()
+# R version 4.2.1 (2022-06-23)
+# Platform: x86_64-pc-linux-gnu (64-bit)
+# Running under: Ubuntu 20.04.5 LTS
+# 
+# Matrix products: default
+# BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3
+# LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/liblapack.so.3
+# 
+# locale:
+#   [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C               LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8     LC_MONETARY=en_US.UTF-8   
+# [6] LC_MESSAGES=en_US.UTF-8    LC_PAPER=en_US.UTF-8       LC_NAME=C                  LC_ADDRESS=C               LC_TELEPHONE=C            
+# [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+# 
+# attached base packages:
+#   [1] stats4    grid      stats     graphics  grDevices utils     datasets  methods   base     
+# 
+# other attached packages:
+#   [1] SingleCellExperiment_1.20.1 SummarizedExperiment_1.28.0 Biobase_2.58.0              GenomicRanges_1.50.2        GenomeInfoDb_1.34.9        
+# [6] IRanges_2.32.0              S4Vectors_0.36.2            BiocGenerics_0.44.0         MatrixGenerics_1.10.0       matrixStats_1.1.0          
+# [11] ComplexHeatmap_2.14.0       Coralysis_1.0.0             ggplot2_3.5.1               dplyr_1.1.1                
+# 
+# loaded via a namespace (and not attached):
+#   [1] ggbeeswarm_0.7.1          colorspace_2.1-0          rjson_0.2.21              class_7.3-20              modeltools_0.2-23         circlize_0.4.15          
+# [7] scuttle_1.8.4             markdown_1.5              bluster_1.8.0             XVector_0.38.0            GlobalOptions_0.1.2       BiocNeighbors_1.16.0     
+# [13] gridtext_0.1.5            ggtext_0.1.2              clue_0.3-64               rstudioapi_0.14           farver_2.1.1              RSpectra_0.16-1          
+# [19] fansi_1.0.4               xml2_1.3.3                codetools_0.2-18          sparseMatrixStats_1.10.0  doParallel_1.0.17         jsonlite_1.8.4           
+# [25] Cairo_1.6-0               cluster_2.1.3             png_0.1-8                 uwot_0.1.14               pheatmap_1.0.12           compiler_4.2.1           
+# [31] dqrng_0.3.0               basilisk_1.10.2           Matrix_1.6-5              limma_3.54.2              aricode_1.0.2             cli_3.6.1                
+# [37] BiocSingular_1.14.0       tools_4.2.1               rsvd_1.0.5                igraph_1.4.1              gtable_0.3.3              glue_1.6.2               
+# [43] GenomeInfoDbData_1.2.9    RANN_2.6.1                reshape2_1.4.4            LiblineaR_2.10-22         doRNG_1.8.6               Rcpp_1.0.10              
+# [49] vctrs_0.6.1               zellkonverter_1.8.0       iterators_1.0.14          DelayedMatrixStats_1.20.0 xfun_0.37                 stringr_1.5.0            
+# [55] beachmat_2.14.0           lifecycle_1.0.3           irlba_2.3.5.1             rngtools_1.5.2            statmod_1.5.0             edgeR_3.40.2             
+# [61] zlibbioc_1.44.0           scales_1.3.0              basilisk.utils_1.10.0     doSNOW_1.0.20             parallel_4.2.1            SparseM_1.81             
+# [67] RColorBrewer_1.1-3        reticulate_1.34.0         gridExtra_2.3             ggrastr_1.0.1             stringi_1.7.12            foreach_1.5.2            
+# [73] ScaledMatrix_1.6.0        scran_1.26.2              filelock_1.0.2            BiocParallel_1.32.6       shape_1.4.6               commonmark_1.9.0         
+# [79] rlang_1.1.0               pkgconfig_2.0.3           bitops_1.0-7              lattice_0.20-45           labeling_0.4.2            patchwork_1.2.0          
+# [85] cowplot_1.1.1             tidyselect_1.2.0          RcppAnnoy_0.0.20          plyr_1.8.8                magrittr_2.0.3            R6_2.5.1                 
+# [91] snow_0.4-4                generics_0.1.3            metapod_1.6.0             DelayedArray_0.24.0       pillar_1.9.0              withr_2.5.0              
+# [97] RCurl_1.98-1.10           tibble_3.2.1              dir.expiry_1.6.0          crayon_1.5.2              utf8_1.2.3                GetoptLong_1.0.5         
+# [103] viridis_0.6.2             locfit_1.5-9.7            flexclust_1.4-1           digest_0.6.31             munsell_0.5.0             beeswarm_0.4.0           
+# [109] viridisLite_0.4.1         vipor_0.4.5          
 #
 #------------------------------------------------------------------------------#
