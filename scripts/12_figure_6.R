@@ -98,7 +98,7 @@ sce <- SummariseCellClusterProbability(object = sce, icp.round = 4)
 
 # Plot probability scores
 prob.persad.umap <- PlotExpression(object = sce, color.by = "mean_probs", dimred = "UMAP", 
-                                   point.size = 0.35, point.stroke = 0, color.scale = "viridis") + 
+                                   point.size = 0.75, point.stroke = 0, color.scale = "viridis") + 
   scale_color_viridis_c(name = "Mean Cell Cluster Probability", breaks = c(0.4, 0.6, 0.8)) +
   labs(x = "", y = "") + 
   theme(legend.position = "bottom", 
@@ -229,7 +229,7 @@ use.colors <- list("stage" = RColorBrewer::brewer.pal(5, "Reds"))
 names(use.colors$stage) <- levels(sce$stage)
 stage.celltype.weiler.umap <- lapply(setNames(c(batch.label, cell.label), c(batch.label, cell.label)), function(x) {
   PlotDimRed(object = sce, color.by = x, use.color = use.colors[[x]], dimred = "UMAP", 
-             point.size = 0.25, point.stroke = 0, seed.color = 1024) + 
+             point.size = 0.75, point.stroke = 0, seed.color = 1024) + 
     theme(legend.position = "bottom",  
           legend.key.size = unit(0.1, 'mm'), 
           legend.justification = "center", 
@@ -260,7 +260,7 @@ sce <- SummariseCellClusterProbability(object = sce, icp.round = 4)
 
 # Plot probability scores
 prob.weiler.umap <- PlotExpression(object = sce, color.by = "mean_probs", dimred = "UMAP", 
-                                   point.size = 0.25, point.stroke = 0, color.scale = "viridis") + 
+                                   point.size = 0.75, point.stroke = 0, color.scale = "viridis") + 
   scale_color_viridis_c(name = "Mean Cell Cluster Probability", breaks = c(0.3, 0.6, 0.9)) +
   labs(x = "", y = "") + 
   theme(legend.position = "bottom", 
@@ -324,7 +324,7 @@ panels_D_F <- cowplot::plot_grid(plotlist = c(stage.celltype.weiler.umap, list(p
 pdf(file = file.path(file.path(res.dir[1], "figure_6_D_F.pdf")), width = 12, height = 5)
 print(panels_D_F)
 dev.off()
-pdf(file = file.path(file.path(res.dir[1], "figure_G.pdf")), width = 12, height = 2)
+pdf(file = file.path(file.path(res.dir[1], "figure_6_G.pdf")), width = 12, height = 2)
 grid::grid.draw(g)
 dev.off()
 #
@@ -354,7 +354,9 @@ for (cell in levels(sce$cell_type)) {
   tmp <- tmp %>% arrange(desc(.data[[cell]]))
   genes <- row.names(tmp)
   up.top5.corr <- tmp[1:5,] %>% `names<-`(genes[1:5])
-  down.top5.corr <- tmp[(nrow(tmp)-4):nrow(tmp),] %>% `names<-`(genes[(nrow(tmp)-4):nrow(tmp)]) %>% rev()
+  up.top5.corr <- rev(up.top5.corr)
+  down.top5.corr <- tmp[(nrow(tmp)-4):nrow(tmp),] %>% `names<-`(genes[(nrow(tmp)-4):nrow(tmp)])
+  down.top5.corr <- rev(down.top5.corr)
   pick.bins <- grepl(cell, colnames(meta.cells))
   data.plt <- t(scale(t(logcounts(meta.cells)[c(names(up.top5.corr), names(down.top5.corr)), pick.bins])))
   row.annot <- rowAnnotation("Pearson" = anno_text(round(c(up.top5.corr, down.top5.corr), 3), gp = gpar(fontsize = 7)))
@@ -374,7 +376,7 @@ for (cell in levels(sce$cell_type)) {
                    dimred = "UMAP", scale.values = T, 
                    color.scale = ifelse(x == "mean_probs", "viridis", "inferno"), 
                    legend.title = ifelse(x == "mean_probs", "Prob.", x), 
-                   point.size = 0.25, point.stroke = 0)
+                   point.size = 0.75, point.stroke = 0)
   })
   pdf(file = file.path(res.dir[1], paste0(gsub("\\/", "_", cell), "_scatter_plot_top5_up_down_Pearson_correlated_gene_exp.pdf")), 
       width = 18, height = 4)
