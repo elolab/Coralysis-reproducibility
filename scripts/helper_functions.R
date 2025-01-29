@@ -1,7 +1,7 @@
 #-------------------------------Helper script----------------------------------#
 # Author: António Sousa (e-mail: aggode@utu.fi)
 # Date: 20/01/2025
-# Last update: 20/01/2025
+# Last update: 29/01/2025
 #------------------------------------------------------------------------------#
 
 #------------------------------------------------------------------------------#
@@ -142,6 +142,51 @@ CustomGeneScatterPlot <- function (object, genes = "", return.plot = FALSE, dim.
       print(p)
     }
   }
+}
+#
+#------------------------------------------------------------------------------#
+
+#------------------------------------------------------------------------------#
+#
+plot_umap <- function(x, by = "batch", size = 0.01, use.color = NULL, legend.nrow = 8,
+                      seed = 123, no_legend = TRUE, title = NULL, 
+                      draw.line = FALSE) {
+  if (by == "batch") group <- colnames(x)[3] else group <- colnames(x)[2]  
+  if (is.null(use.color)) {
+    color.palettes <- RColorBrewer::brewer.pal.info[RColorBrewer::brewer.pal.info$category == 'qual',]
+    color.palette <- unlist(mapply(RColorBrewer::brewer.pal, color.palettes$maxcolors, rownames(color.palettes)))
+    ngroups <- nlevels(x[,group, drop=TRUE])
+    set.seed(seed)
+    use.color <- sample(color.palette, ngroups)
+  }
+  p <- ggplot(data = x, mapping = aes(x = UMAP1, y = UMAP2, color = .data[[group]])) + 
+    scale_color_manual(values = use.color) + 
+    theme_void() + 
+    theme(legend.position = "bottom", legend.box.margin = margin(0, 0, 0, 0), 
+          legend.key.size = unit(0.1, 'mm'), legend.justification = "left", 
+          legend.text = element_text(size = 7)) +
+    guides(color = guide_legend(title="", nrow = legend.nrow, bycol = TRUE, 
+                                override.aes = list(size=2.5)))
+  if (nrow(x)<3e4) { # rasterize dots if >=30K cells
+    p <- p + geom_point(size = size, stroke = 0) 
+  } else {
+    p <- p + ggrastr::rasterise(geom_point(size=size,  stroke = 0), dpi = 300)
+  }
+  if (no_legend) {
+    p <- p + theme(legend.position = "none")
+  }
+  if (!is.null(title)) {
+    p <- p + ggtitle(title[1]) + 
+      theme(plot.title = element_text(hjust = 0.5))
+    if (length(title)>1) {
+      p <- p + labs(subtitle = title[2])
+    }
+  }
+  if (draw.line) {
+    p <- p + annotate(geom = "segment", y = -Inf, yend = Inf, color = "gray", 
+                      x = Inf, xend = Inf, linewidth = 0.75) 
+  }
+  return(p + theme(plot.margin = unit(c(0, 0, 0, 0), "cm")))
 }
 #
 #------------------------------------------------------------------------------#
