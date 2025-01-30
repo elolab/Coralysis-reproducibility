@@ -17,7 +17,7 @@ library("ComplexHeatmap") # v.2.14.0
 source("scripts/helper_functions.R") 
 
 # Folders to save results 
-analysis <- "04_exdata_figure_3"
+analysis <- "04_extdata_figure_3"
 res.dir <- file.path("results", analysis)
 res.dir <- file.path(res.dir, c("plots", "tables", "objects"))
 for (f in res.dir) if (!dir.exists(f)) dir.create(path = f, recursive = TRUE)
