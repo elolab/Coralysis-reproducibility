@@ -1,7 +1,7 @@
 #-------------------------------Helper script----------------------------------#
 # Author: António Sousa (e-mail: aggode@utu.fi)
 # Date: 20/01/2025
-# Last update: 29/01/2025
+# Last update: 30/01/2025
 #------------------------------------------------------------------------------#
 
 #------------------------------------------------------------------------------#
@@ -187,6 +187,151 @@ plot_umap <- function(x, by = "batch", size = 0.01, use.color = NULL, legend.nro
                       x = Inf, xend = Inf, linewidth = 0.75) 
   }
   return(p + theme(plot.margin = unit(c(0, 0, 0, 0), "cm")))
+}
+#
+#------------------------------------------------------------------------------#
+
+#------------------------------------------------------------------------------#
+#
+plot_umap_dataset <- function(emb.list, dataset, size = 0.01) {
+  #size <- ifelse(dataset %in% c("Lung", "Immune (human)"), 0.1, 0.01)
+  plts <- list()
+  plts[[1]] <- plot_grid(plotlist = lapply(c("batch", "cell"), function(x) {
+    if (x=="batch") {
+      plot_umap(x = emb.list[[1]], by = x, size = size) + 
+        theme(legend.position = "none", 
+              plot.margin = unit(c(0.5, 0, 0, 0), "cm")) + 
+        labs(subtitle = "full(-)")
+    } else {
+      plot_umap(x = emb.list[[1]], by = x, size = size) + 
+        theme(legend.position = "none")  + 
+        annotate(geom = "segment", y = -Inf, yend = Inf, color = "gray", 
+                 x = Inf, xend = Inf, linewidth = 0.5)
+    }
+  }), ncol=2, align = "vh")
+  plts[[2]] <- plot_grid(plotlist = lapply(c("batch", "cell"), function(x) {
+    if (x=="batch") {
+      plot_umap(x = emb.list[[2]], by = x, size = size) + 
+        theme(legend.position = "none", 
+              plot.margin = unit(c(0.5, 0, 0, 0), "cm")) + 
+        labs(subtitle = "full(+)")
+    } else {
+      plot_umap(x = emb.list[[2]], by = x, size = size) + 
+        theme(legend.position = "none") + 
+        annotate(geom = "segment", y = -Inf, yend = Inf, color = "gray", 
+                 x = Inf, xend = Inf, linewidth = 0.5) 
+    }
+  }), ncol=2, align = "vh")
+  plts[[3]] <- plot_grid(plotlist = lapply(c("batch", "cell"), function(x) {
+    if (x=="batch") {
+      plot_umap(x = emb.list[[3]], by = x, size = size) + 
+        labs(subtitle = "hvg(-)") + 
+        theme(legend.key.spacing.x = unit(0.5, "mm"), 
+              legend.key.spacing.y = unit(0.5, "mm"), 
+              legend.text = element_text(margin = margin(l = unit(0.5, "mm"))),
+              legend.justification = "left", 
+              legend.position = c(0, -0.4), 
+              plot.margin = unit(c(0, 0, 3, 0), "cm"))
+    } else {
+      plot_umap(x = emb.list[[3]], by = x, size = size) + 
+        theme(legend.position = "none") + 
+        annotate(geom = "segment", y = -Inf, yend = Inf, color = "gray", 
+                 x = Inf, xend = Inf, linewidth = 0.5)
+    }
+  }), ncol=2, align = "vh")
+  plts[[4]] <- plot_grid(plotlist = lapply(c("batch", "cell"), function(x) {
+    if (x=="batch") {
+      plot_umap(x = emb.list[[4]], by = x, size = size) + 
+        theme(legend.position = "none") + 
+        labs(subtitle = "hvg(+)")
+    } else {
+      plot_umap(x = emb.list[[4]], by = x, size = size) + 
+        annotate(geom = "segment", y = -Inf, yend = Inf, color = "gray", 
+                 x = Inf, xend = Inf, linewidth = 0.5) + 
+        theme(legend.key.spacing.x = unit(0.5, "mm"), 
+              legend.key.spacing.y = unit(0.5, "mm"),
+              legend.text = element_text(margin = margin(l = unit(0.5, "mm"))),
+              legend.justification = "left", 
+              legend.position = c(-1, -0.4), 
+              plot.margin = unit(c(0, 0, 3, 0), "cm"))
+    }
+  }), ncol=2, align = "vh")
+  plot_grid(plts[[1]], plts[[2]], plts[[3]], plts[[4]], ncol = 2, labels = c(dataset), 
+            rel_heights = c(0.375, 0.625), label_x = 0, label_y = 0.9,
+            hjust = 0, vjust = 0)
+}
+#
+#------------------------------------------------------------------------------#
+
+#------------------------------------------------------------------------------#
+#
+plot_scib_metrics_heatmap <- function(scaled_data, meta_data, metrics_list, 
+                                      legend_title = "", 
+                                      show_annot_legend = TRUE, ...) {
+  # Parse data
+  row.colors <- c(RColorBrewer::brewer.pal(9, "Reds")[c(3, 5, 7, 9)], 
+                  RColorBrewer::brewer.pal(9, "Blues")[c(3, 5, 7, 9)])
+  names(row.colors) <- levels(as.factor(meta_data[,"Output-Input",drop=T]))
+  col.names <- unlist(metrics_list)
+  names(col.names) <- gsub(pattern = paste(paste0(names(metrics_list), "\\."), collapse = "|"),
+                           replacement = "", x = names(col.names))
+  col.split <- unlist(lapply(X = names(metrics_list), FUN = function(x) rep(x, length(metrics_list[[x]]))))
+  names(col.split) <- names(col.names)
+  symbols.pos <- unlist(lapply(split(1:nrow(scaled_data), 
+                                     factor(unlist(lapply(X = row.names(scaled_data), FUN = function(x) {
+                                       y <- strsplit(x, split = "_")[[1]]
+                                       y[length(y)-1]})), 
+                                       levels = c("Coralysis", "scVI", "Scanorama", "fastMNN", "Harmony", 
+                                                  "Seurat v4 CCA", "Seurat v4 RPCA", "Unintegrated"))), 
+                               function(x) floor(mean(x))
+  ))
+  symbols.pos <- symbols.pos[!is.na(symbols.pos)]
+  method.symbols <- rep(NA, nrow(scaled_data))
+  symbols <- c(24, 0:1, 3:7)
+  names(symbols) <- c("Coralysis", "scVI", "Scanorama", "fastMNN", "Harmony", 
+                      "Seurat v4 CCA", "Seurat v4 RPCA", "Unintegrated")
+  method.symbols[symbols.pos] <- symbols[names(symbols.pos)]
+  # Plot heatmap
+  heat.plt <- Heatmap(matrix = scaled_data, name = legend_title, 
+                      cluster_rows = F, cluster_columns = F, 
+                      split = factor(unlist(lapply(X = row.names(scaled_data), FUN = function(x) {
+                        y <- strsplit(x, split = "_")[[1]]
+                        y[length(y)-1]})), levels = c("Coralysis", "scVI", "Scanorama", "fastMNN", "Harmony", 
+                                                      "Seurat v4 CCA", "Seurat v4 RPCA", "Unintegrated")),
+                      row_labels = unlist(lapply(X = row.names(scaled_data), FUN = function(x) {
+                        y <- strsplit(x, split = "_")[[1]]
+                        y[length(y)]})),
+                      row_title_gp = gpar(fontsize = 10),
+                      left_annotation = HeatmapAnnotation(Methods = anno_simple(
+                        unlist(lapply(X = row.names(scaled_data), FUN = function(x) {
+                          y <- strsplit(x, split = "_")[[1]]
+                          y[length(y)-1]})), 
+                        pch = method.symbols, 
+                        col = c("Coralysis" = "white", "scVI" = "white", "Scanorama" = "white", "fastMNN" = "white", "Harmony" = "white", 
+                                "Seurat v4 CCA" = "white", "Seurat v4 RPCA" = "white", "Unintegrated" = "white")
+                      ), 
+                      which = "row", show_annotation_name = FALSE),
+                      row_title = NULL,
+                      top_annotation = HeatmapAnnotation(Metrics = col.split[colnames(scaled_data)], 
+                                                         col = list(Metrics = c("Batch correction" = "#8a94c5ff", "Bio conservation" = "#f899b3ff")), 
+                                                         show_annotation_name = F, show_legend = show_annot_legend), 
+                      # HeatmapAnnotation(Metrics = anno_block(labels = c("Batch correction", "Bio conservation"), 
+                      #                                                       labels_gp = gpar(col = "white"),
+                      #                                                       gp = gpar(fill = c("#8a94c5ff", "#f899b3ff")))),
+                      right_annotation = HeatmapAnnotation(Input_Output = unlist(lapply(X = row.names(scaled_data), FUN = function(x) {
+                        y <- strsplit(x, split = "_")[[1]]
+                        y[length(y)]})), which = "row", col = list(Input_Output = row.colors), show_annotation_name = F, 
+                        show_legend = show_annot_legend), 
+                      show_row_names = F, 
+                      row_gap = unit(2.5, "mm"),
+                      column_split = col.split[colnames(scaled_data)],
+                      column_labels = col.names[colnames(scaled_data)], 
+                      column_names_gp = gpar(fontsize = 5.5), column_names_rot = 60, 
+                      column_gap = unit(2.5, "mm"),
+                      col = circlize::colorRamp2(c(-4, -2, 0, 2, 4), c("#451077FF", "#721F81FF", "white", "#6DCD59FF", "#35B779FF")), # circlize::colorRamp2(c(-4, -2, 0, 2, 4), c("blue4", "blue1", "white", "red1", "red4")) 
+                      ...)
+  heat.plt <- grid.grabExpr(draw(heat.plt, merge_legend = TRUE, heatmap_legend_side = "right", annotation_legend_side = "right"))
+  return(heat.plt)
 }
 #
 #------------------------------------------------------------------------------#
