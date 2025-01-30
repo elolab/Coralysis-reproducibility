@@ -1,6 +1,6 @@
 #------------------------------------------------------------------------------#
 # Author: António Sousa (e-mail: aggode@utu.fi)
-# Description: R script to make Extended Data Figure 3 and Supplementary Figures 7-8.
+# Description: R script to make Extended Data Figure 3-5 and Supplementary Figures 7-8.
 # Date: 30/01/2025
 # Last update: 30/01/2025
 #------------------------------------------------------------------------------#
@@ -17,7 +17,7 @@ library("ComplexHeatmap") # v.2.14.0
 source("scripts/helper_functions.R") 
 
 # Folders to save results 
-analysis <- "04_extdata_figure_3"
+analysis <- "04_extdata_figure_3_4_5"
 res.dir <- file.path("results", analysis)
 res.dir <- file.path(res.dir, c("plots", "tables", "objects"))
 for (f in res.dir) if (!dir.exists(f)) dir.create(path = f, recursive = TRUE)
@@ -72,7 +72,7 @@ scib <- scib[pick.bench.data,]
 
 #------------------------------------------------------------------------------#
 #
-## Supplementary figures 7-8
+## Extended Data Figure 4-5
 
 # Plot Coralysis integrated embeddings
 plot.all <- list()
@@ -108,14 +108,14 @@ for (d in data.sets) {
 
 ## Plot altogether 
 # real data sets
-pdf(file = file.path(res.dir[1], "supp_figure_7.pdf"), width = 10, height = 8)
+pdf(file = file.path(res.dir[1], "extdata_figure_4.pdf"), width = 10, height = 8)
 print(
   plot_grid(plot.all$pancreas, plot.all$lung_atlas, plot.all$immune_cell_hum, plot.all$immune_cell_hum_mou, 
             ncol = 2, align = "vh")
 ) 
 dev.off()
 # simulations
-pdf(file = file.path(res.dir[1], "supp_figure_8.pdf"), width = 10, height = 4)
+pdf(file = file.path(res.dir[1], "extdata_figure_5.pdf"), width = 10, height = 4)
 print(
   plot_grid(plot.all$simulations_1_1, plot.all$simulations_2, 
             ncol = 2, align = "vh")
@@ -126,6 +126,8 @@ dev.off()
 
 #------------------------------------------------------------------------------#
 #
+## Supplementary Figure 7-8
+
 ## Plot unintegrated embeddings
 plot.unint.all <- list()
 for (d in data.sets) {
@@ -161,7 +163,7 @@ for (d in data.sets) {
 
 ## Plot altogether
 # real data sets
-pdf(file = file.path(res.dir[1], "real_datasets_coralysis_unintegrated_UMAPs.pdf"), width = 10, height = 8)
+pdf(file = file.path(res.dir[1], "supp_figure_7.pdf"), width = 10, height = 8)
 print(
   plot_grid(plot.unint.all$pancreas, plot.unint.all$lung_atlas, 
             plot.unint.all$immune_cell_hum, plot.unint.all$immune_cell_hum_mou, 
@@ -170,7 +172,7 @@ print(
 dev.off()
 
 # simulation data sets
-pdf(file = file.path(res.dir[1], "sim_datasets_coralysis_unintegrated_UMAPs.pdf"), width = 10, height = 4)
+pdf(file = file.path(res.dir[1], "supp_figure_8.pdf"), width = 10, height = 4)
 print(
   plot_grid(plot.unint.all$simulations_1_1, plot.unint.all$simulations_2, 
             ncol = 2, align = "vh")
