@@ -256,16 +256,16 @@ res.dir <- file.path("results", analysis)
 res.dir <- file.path(res.dir, c("plots", "tables", "objects"))
 for (f in res.dir) if (!dir.exists(f)) dir.create(path = f, recursive = TRUE)
 file.paths <- list.files(path = res.dir[3], pattern = "^Human", full.names = TRUE)
-names(file.paths) <- c("ifgn", "h1n1")
+names(file.paths) <- c("ifng", "h1n1")
 sce.list <- lapply(X = file.paths, function(x) zellkonverter::readH5AD(file = x))
 
 # Filter the datasets for the no. of proteins shared and merged them into one SCE
-table(row.names(sce.list$h1n1) %in% row.names(sce.list$ifgn)) # 39 proteins shared between datasets
-shared.proteins <- row.names(sce.list$h1n1)[row.names(sce.list$h1n1) %in% row.names(sce.list$ifgn)] 
-sce.list$ifgn[["batch"]] <- "ifgn"
+table(row.names(sce.list$h1n1) %in% row.names(sce.list$ifng)) # 39 proteins shared between datasets
+shared.proteins <- row.names(sce.list$h1n1)[row.names(sce.list$h1n1) %in% row.names(sce.list$ifng)] 
+sce.list$ifng[["batch"]] <- "ifng"
 sce.list$h1n1[["batch"]] <- "h1n1"
 sce.list <- lapply(X = sce.list, function(x) x[shared.proteins,])
-colnames(sce.list$ifgn) <- paste("cell", "ifgn", colnames(sce.list$ifgn), sep = "_")
+colnames(sce.list$ifng) <- paste("cell", "ifng", colnames(sce.list$ifng), sep = "_")
 colnames(sce.list$h1n1) <- paste("cell", "h1n1", colnames(sce.list$h1n1), sep = "_")
 sce <- do.call(cbind, sce.list)
 
@@ -377,7 +377,7 @@ pdf(file = file.path(file.path(res.dir[1], "figure_3_K_L.pdf")),
 print(int.plts.all)
 dev.off()
 plot.title <- title <- cowplot::ggdraw() + 
-  cowplot::draw_label("Whole blood CyTOF data from Rahil et al., 2020 (h1n1) & Bjornson-Hooper et al., 2022 (ifgn)", 
+  cowplot::draw_label("Whole blood CyTOF data from Rahil et al., 2020 (h1n1) & Bjornson-Hooper et al., 2022 (ifng)", 
                       x = 0, hjust = 0, size = 11.5) + 
   theme(plot.margin = margin(0, 0, 0, 7))
 pdf(file = file.path(file.path(res.dir[1], "figure_3_I_L.pdf")), 
