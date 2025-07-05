@@ -26,26 +26,26 @@ documentation at
 All the datasets used in the manuscript are publicly available online,
 and the links are provided in the table below. A more detailed
 description of the datasets and their respective references can be found
-at [`datasets/code_datasets_description.tsv`](./datasets).
+at [`data/code_datasets_description.tsv`](./data).
 
 ##### 🔗 **Summary of scripts used to reproduce the Coralysis manuscript figures.**
 
-| Scripts | Description | Data |
-|----|----|----|
-| `01_figure_1.R` | R script to make Figure 1 | [Assay V1](https://support.10xgenomics.com/single-cell-gene-expression/datasets/1.1.0/pbmc6k); [Assay V2](https://support.10xgenomics.com/single-cell-gene-expression/datasets/2.1.0/pbmc8k) |
-| `02_extdata_figure_2.R` | R script to make Supplementary Figure S2 | [Assay V1](https://support.10xgenomics.com/single-cell-gene-expression/datasets/1.1.0/pbmc6k); [Assay V2](https://support.10xgenomics.com/single-cell-gene-expression/datasets/2.1.0/pbmc8k) |
-| `03_figure_2.R` | R script to make Figure 2B & Supplementary Figure S14 | `ifnb` from [SeuratData](https://github.com/satijalab/seurat-data) ([parsed](https://github.com/elolab/scib-pipeline/blob/main/data/create_ifnb_dataset.R)) |
-| `04_extdata_figure_3_4_5.R` | R script to make Supplementary Figure S3,S10-S13 | [Figshare](https://doi.org/10.6084/m9.figshare.12420968) |
-| `05_figure_3.R` | R script to to make Figure 3A-G,I | [GitHub](https://github.com/single-cell-proteomic/SCPRO-HI/tree/main/Data) |
-| `06_figure_3.py` | Python script to make Figure 3H,M & Supplementary Figure S16 | [GitHub](https://github.com/single-cell-proteomic/SCPRO-HI/tree/main/Data) |
-| `07_figure_4.R` | R script to make Figure 4 | `panc8` from [SeuratData](https://github.com/satijalab/seurat-data) |
-| `08_extdata_figure_6.R` | R script to make Supplementary Figure S17,S18 | [Figshare](https://doi.org/10.6084/m9.figshare.24625302.v1) |
-| `09_extdata_figure_7.R` | R script to make Supplementary Figure S19,S20 | [Figshare](https://doi.org/10.6084/m9.figshare.24625302.v1) |
-| `10_extdata_figure_8.R` | R script to make Supplementary Figure S21 | `ifnb` from [SeuratData](https://github.com/satijalab/seurat-data) |
-| `11_figure_5.R` | R script to make Figure 5 | `pbmcsca` from [SeuratData](https://github.com/satijalab/seurat-data) |
-| `12_figure_6.R` | R script to make Figure 6 & Supplementary Figure S22 | [Zenodo](https://zenodo.org/records/6383269/files/cd34_multiome_rna.h5ad); [Figshare](https://figshare.com/ndownloader/files/41674599) |
-| `helper_functions.R` | R script with custom R functions |  |
-| [`elolab/scib-pipeline`](https://github.com/elolab/scib-pipeline) | Snakemake workflow to benchmark Coralysis | [Figshare](https://doi.org/10.6084/m9.figshare.12420968); `ifnb` from [SeuratData](https://github.com/satijalab/seurat-data) ([parsed](https://github.com/elolab/scib-pipeline/blob/main/data/create_ifnb_dataset.R)) |
+| Scripts                                                           | Description                                                  | Data                                                                                                                                                                                                                  |
+|-------------------------------------------------------------------|--------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `01_figure_1.R`                                                   | R script to make Figure 1                                    | [Assay V1](https://support.10xgenomics.com/single-cell-gene-expression/datasets/1.1.0/pbmc6k); [Assay V2](https://support.10xgenomics.com/single-cell-gene-expression/datasets/2.1.0/pbmc8k)                          |
+| `02_extdata_figure_2.R`                                           | R script to make Supplementary Figure S2                     | [Assay V1](https://support.10xgenomics.com/single-cell-gene-expression/datasets/1.1.0/pbmc6k); [Assay V2](https://support.10xgenomics.com/single-cell-gene-expression/datasets/2.1.0/pbmc8k)                          |
+| `03_figure_2.R`                                                   | R script to make Figure 2B & Supplementary Figure S14        | `ifnb` from [SeuratData](https://github.com/satijalab/seurat-data) ([parsed](https://github.com/elolab/scib-pipeline/blob/main/data/create_ifnb_dataset.R))                                                           |
+| `04_extdata_figure_3_4_5.R`                                       | R script to make Supplementary Figure S3,S10-S13             | [Figshare](https://doi.org/10.6084/m9.figshare.12420968)                                                                                                                                                              |
+| `05_figure_3.R`                                                   | R script to to make Figure 3A-G,I                            | [GitHub](https://github.com/single-cell-proteomic/SCPRO-HI/tree/main/Data)                                                                                                                                            |
+| `06_figure_3.py`                                                  | Python script to make Figure 3H,M & Supplementary Figure S16 | [GitHub](https://github.com/single-cell-proteomic/SCPRO-HI/tree/main/Data)                                                                                                                                            |
+| `07_figure_4.R`                                                   | R script to make Figure 4                                    | `panc8` from [SeuratData](https://github.com/satijalab/seurat-data)                                                                                                                                                   |
+| `08_extdata_figure_6.R`                                           | R script to make Supplementary Figure S17,S18                | [Figshare](https://doi.org/10.6084/m9.figshare.24625302.v1)                                                                                                                                                           |
+| `09_extdata_figure_7.R`                                           | R script to make Supplementary Figure S19,S20                | [Figshare](https://doi.org/10.6084/m9.figshare.24625302.v1)                                                                                                                                                           |
+| `10_extdata_figure_8.R`                                           | R script to make Supplementary Figure S21                    | `ifnb` from [SeuratData](https://github.com/satijalab/seurat-data)                                                                                                                                                    |
+| `11_figure_5.R`                                                   | R script to make Figure 5                                    | `pbmcsca` from [SeuratData](https://github.com/satijalab/seurat-data)                                                                                                                                                 |
+| `12_figure_6.R`                                                   | R script to make Figure 6 & Supplementary Figure S22         | [Zenodo](https://zenodo.org/records/6383269/files/cd34_multiome_rna.h5ad); [Figshare](https://figshare.com/ndownloader/files/41674599)                                                                                |
+| `helper_functions.R`                                              | R script with custom R functions                             |                                                                                                                                                                                                                       |
+| [`elolab/scib-pipeline`](https://github.com/elolab/scib-pipeline) | Snakemake workflow to benchmark Coralysis                    | [Figshare](https://doi.org/10.6084/m9.figshare.12420968); `ifnb` from [SeuratData](https://github.com/satijalab/seurat-data) ([parsed](https://github.com/elolab/scib-pipeline/blob/main/data/create_ifnb_dataset.R)) |
 
 <br>
 
