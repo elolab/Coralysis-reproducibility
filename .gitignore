@@ -1,5 +1,5 @@
 R
-data
+data/*
 results
 img
 sctoolkit.sh
@@ -11,3 +11,5 @@ rsessions
 .bash_history
 .Rhistory
 .conda
+README.Rmd
+!data/code_datasets_description.tsv
