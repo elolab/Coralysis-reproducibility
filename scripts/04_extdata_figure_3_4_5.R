@@ -352,14 +352,65 @@ pdf(file = file.path(res.dir[1], "extdata_figure_3_C.pdf"), width = 7, height = 
 print(benchmark.plt)
 dev.off()
 
-# Boxplot of variance given input-outputs per dataset per method
-benchmark.plt.boxplot <- benchmark.dataset.plt.data %>% 
+## Boxplot of variance given input-outputs per dataset per method
+# Estimating the Median Performance per Dataset using the Overall 
+#performance score per method per dataset
+median.performance.dataset <- benchmark.dataset.plt.data %>% 
   filter(Method != "Unintegrated") %>% 
+  group_by(Method, Dataset) %>% 
+  mutate("Median_Performance" = median(Overall)) %>% 
+  ungroup(.) %>% 
+  add_row(Dataset = "simulations_2", Method = "Seurat v4 RPCA")
+
+# Add Median Performance for the 'Method' "Seurat v4 RPCA"
+#in the 'Dataset' "simulations_2" as this method failed 
+#for all the tasks related with this dataset. Performing 
+#the mean of the median performance for the Seurat v4 RPCA
+#method without considering the Simulations 2 dataset would
+#overestimate its performance, and its inclusion (as 0) would 
+#underestimate its performance. Therefore, it was estimated that 
+#its performance would be the mean of the median performance 
+#from all the other methods for the dataset Simulations 2, 
+#yielding a Median Performance of 0.5290003.
+median.performance.dataset[nrow(median.performance.dataset), "Median_Performance"] <- median.performance.dataset %>% 
+  filter(Dataset == "simulations_2" & Method != "Seurat v4 RPCA") %>% 
+  pull(Median_Performance) %>% 
+  mean(.) 
+
+# Adding the Mean of the Median Performance per Dataset
+mean.median.performance <- median.performance.dataset[,c(1:2,26)] %>% 
+  distinct(.) %>%
+  group_by(Method) %>% 
+  mutate("Mean_Median_Performance" = mean(Median_Performance)) %>%
+  ungroup(.) %>%
+  select(Method, Mean_Median_Performance) %>% 
+  distinct(.) %>%
+  arrange(tolower(Method)) %>% 
+  mutate("Rank" = dense_rank(desc(Mean_Median_Performance)), 
+         "x" = row_number()-0.4, 
+         "xend" = row_number()+0.4, 
+         "color" = alpha("#117733", 1.1 - (Rank / 10)))
+
+# Add metrics to overall data frame
+benchmark.dataset.plt.data.metrics <- left_join(median.performance.dataset, mean.median.performance) 
+write.table(x = as.data.frame(benchmark.dataset.plt.data.metrics[,!colnames(benchmark.dataset.plt.data.metrics) %in% c("x", "xend", "color")]), 
+            file = file.path(res.dir[2], "metrics_without_failed_tasks_with_additional_metrics.tsv"), 
+            quote = FALSE, sep = "\t", row.names = FALSE)
+
+# Plot
+benchmark.plt.boxplot <- benchmark.dataset.plt.data.metrics %>% 
   ggplot(data = ., mapping = aes(x = Method, y = Overall)) + 
+  geom_hline(mapping = aes(yintercept = Mean_Median_Performance), 
+             color = "gray") + 
   geom_boxplot(mapping = aes(fill=Dataset)) + 
+  geom_segment(data = mean.median.performance, mapping = aes(x = x, xend = xend, 
+                             y = Mean_Median_Performance),
+               color = mean.median.performance$color,
+               linewidth = 1.5) +
   scale_fill_brewer(palette="Spectral", labels = data.sets.full) + 
   theme_classic() + 
   scale_y_continuous(limits = c(0.4,1)) + 
+  scale_alpha(guide = "none") + 
   theme(#legend.position = "bottom", 
     axis.text = element_text(size = 14), 
     axis.title = element_text(size = 16),
