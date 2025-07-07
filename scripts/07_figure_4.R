@@ -328,56 +328,88 @@ dev.off()
 ## Figure 4 F,H
 
 # Plot: fig. 4 F
+# Annotations
+col.text <- matrix("black", ncol = 13, nrow = 13)
+diag(col.text) <- "white"
+col.text <- as.vector(col.text)
+indrop2_bottom_ha = HeatmapAnnotation("Cells" = anno_barplot(log10(colSums(conf.mtx$indrop2))), 
+                                      height = unit(0.5, "cm"))
+indrop2_row_ha = rowAnnotation(
+  "Prediction" = anno_text(
+    paste(paste0(round((rowSums(conf.mtx$indrop2) - diag(conf.mtx$indrop2))/(rowSums(conf.mtx$indrop2))*100, 1), "%"), 
+          paste0("(", (rowSums(conf.mtx$indrop2) - diag(conf.mtx$indrop2)), ")")),
+    location = 0.5, just = "center", gp = gpar(fontsize = 9)
+  )
+)
+# >colSums(conf.mtx$indrop2)
+# acinar activated_stellate              alpha               beta              delta             ductal        endothelial 
+# 115                 79                659                373                127                199                 23 
+# epsilon              gamma         macrophage               mast quiescent_stellate            schwann 
+# 2                 89                 17                 12                 23                  6 
+# Heatmap
 conf.mtx.indrop2.heat <- grid.grabExpr(draw(Heatmap(matrix = ((conf.mtx$indrop2 / rowSums(conf.mtx$indrop2))*100), 
-                                 name = "Cell %",
-                                 cluster_rows = F, cluster_columns = F,
-                                 show_column_names = F, row_names_side = "left",
-                                 col = circlize::colorRamp2(c(0, 50, 100), c("gray90", "red4", "red1")),
-                                 column_names_side = "top", column_names_rot = 45,
-                                 top_annotation = HeatmapAnnotation(df=data.frame("GroundTruth" = colnames(conf.mtx$indrop2)),
-                                                                    col = list("GroundTruth" = use.colors$cell_type[colnames(conf.mtx$indrop2)]),
-                                                                    show_legend = FALSE, 
-                                                                    show_annotation_name = FALSE, gap = unit(0.1, "cm"), 
-                                                                    annotation_legend_param = list(title = "Ground-Truth")),
-                                 layer_fun = function(j, i, x, y, width, height, fill, slice_r, slice_c) {
-                                   v = pindex(conf.mtx$indrop2, i, j)
-                                   grid.text(sprintf("%.0f", v), x, y, gp = gpar(fontsize = 9))
-                                   if(slice_r != slice_c) {
-                                     grid.rect(gp = gpar(lwd = 2, fill = "transparent"))
-                                   }
-                                 },
-                                 right_annotation = rowAnnotation(
-                                   "Prediction" = anno_text(
-                                     (rowSums(conf.mtx$indrop2) - diag(conf.mtx$indrop2)),
-                                     location = 0.5, just = "center", gp = gpar(fontsize = 9))), 
-                                 rect_gp = gpar(col = "white", lwd = 4), column_title = "Ground-truth", row_title = "Predicted", 
-                                 show_heatmap_legend = FALSE, row_names_gp = gpar(fontsize = 9), 
-                                 column_title_gp = gpar(fontsize = 10), row_title_gp = gpar(fontsize = 10),
+                                                    name = "Cell %",
+                                                    cluster_rows = F, cluster_columns = F,
+                                                    show_column_names = F, row_names_side = "left",
+                                                    col = circlize::colorRamp2(c(0, 10, 90, 95, 100), c("#F5F5F5", "gray50", "lightblue", "pink", "firebrick")), 
+                                                    #circlize::colorRamp2(c(0, 50, 100), c("gray90", "red4", "red1")),
+                                                    column_names_side = "top", column_names_rot = 45,
+                                                    bottom_annotation = indrop2_bottom_ha,
+                                                    top_annotation = HeatmapAnnotation(df=data.frame("GroundTruth" = colnames(conf.mtx$indrop2)),
+                                                                                       col = list("GroundTruth" = use.colors$cell_type[colnames(conf.mtx$indrop2)]),
+                                                                                       show_legend = FALSE, 
+                                                                                       show_annotation_name = FALSE, gap = unit(0.1, "cm"), 
+                                                                                       annotation_legend_param = list(title = "Ground-Truth")),
+                                                    layer_fun = function(j, i, x, y, width, height, fill, slice_r, slice_c) {
+                                                      v = pindex(((conf.mtx$indrop2 / rowSums(conf.mtx$indrop2))*100), i, j)
+                                                      grid.text(sprintf(as.character(as.numeric(round(v, 1)))), x, y, 
+                                                                gp = gpar(fontsize = 7, col = col.text, fontface = "plain"))
+                                                      if(slice_r != slice_c) {
+                                                        grid.rect(gp = gpar(lwd = 2, fill = "transparent"))
+                                                      }
+                                                    },
+                                                    right_annotation = indrop2_row_ha, 
+                                                    rect_gp = gpar(col = "white", lwd = 4), column_title = "Ground-truth", row_title = "Predicted", 
+                                                    show_heatmap_legend = FALSE, row_names_gp = gpar(fontsize = 9), 
+                                                    column_title_gp = gpar(fontsize = 10), row_title_gp = gpar(fontsize = 10)
 )))
 
 # Plot: fig. 4 H
+# Annotations
+smartseq2_bottom_ha = HeatmapAnnotation("Cells" = anno_barplot(log10(colSums(conf.mtx$smartseq2))), 
+                                        height = unit(0.5, "cm"))
+smartseq2_row_ha = rowAnnotation(
+  "Prediction" = anno_text(
+    paste(paste0(round((rowSums(conf.mtx$smartseq2) - diag(conf.mtx$smartseq2))/(rowSums(conf.mtx$smartseq2))*100, 1), "%"), 
+          paste0("(", (rowSums(conf.mtx$smartseq2) - diag(conf.mtx$smartseq2)), ")")),
+    location = 0.5, just = "center", gp = gpar(fontsize = 9)
+  )
+)
+# > colSums(conf.mtx$smartseq2)
+# acinar activated_stellate              alpha               beta              delta             ductal        endothelial 
+# 188                 55               1008                308                127                444                 21 
+# epsilon              gamma         macrophage               mast quiescent_stellate            schwann 
+# 8                213                  7                  7                  6                  2 
 conf.mtx.smartseq2.heat <- grid.grabExpr(draw(Heatmap(matrix = ((conf.mtx$smartseq2 / rowSums(conf.mtx$smartseq2))*100), 
                                    name = "Cell %",
                                    cluster_rows = F, cluster_columns = F,
                                    show_column_names = F, row_names_side = "left",
-                                   col = circlize::colorRamp2(c(0, 50, 100), c("gray90", "red4", "red1")),
+                                   col = circlize::colorRamp2(c(0, 10, 90, 95, 100), c("#F5F5F5", "gray50", "lightblue", "pink", "firebrick")),
                                    column_names_side = "top", column_names_rot = 45,
+                                   bottom_annotation = smartseq2_bottom_ha,
                                    top_annotation = HeatmapAnnotation(df=data.frame("GroundTruth" = colnames(conf.mtx$smartseq2)),
                                                                       col = list("GroundTruth" = use.colors$cell_type[colnames(conf.mtx$smartseq2)]),
                                                                       show_annotation_name = FALSE, gap = unit(0.1, "cm"),
                                                                       show_legend = FALSE, 
                                                                       annotation_legend_param = list(title = "Ground-Truth")),
                                    layer_fun = function(j, i, x, y, width, height, fill, slice_r, slice_c) {
-                                     v = pindex(conf.mtx$smartseq2, i, j)
-                                     grid.text(sprintf("%.0f", v), x, y, gp = gpar(fontsize = 9))
+                                     v = pindex(((conf.mtx$smartseq2 / rowSums(conf.mtx$smartseq2))*100), i, j)
+                                     grid.text(sprintf(as.character(as.numeric(round(v, 1)))), x, y, gp = gpar(fontsize = 7, col = col.text))
                                      if(slice_r != slice_c) {
                                        grid.rect(gp = gpar(lwd = 2, fill = "transparent"))
                                      }
                                    },
-                                   right_annotation = rowAnnotation(
-                                     "Prediction" = anno_text(
-                                       (rowSums(conf.mtx$smartseq2) - diag(conf.mtx$smartseq2)),
-                                       location = 0.5, just = "center",  gp = gpar(fontsize = 9))), 
+                                   right_annotation = smartseq2_row_ha, 
                                    rect_gp = gpar(col = "white", lwd = 4), column_title = "Ground-truth", row_title = "Predicted", 
                                    show_heatmap_legend = TRUE, row_names_gp = gpar(fontsize = 9), 
                                    column_title_gp = gpar(fontsize = 10), row_title_gp = gpar(fontsize = 10),
@@ -408,7 +440,7 @@ plot_B_D <- cowplot::plot_grid(plotlist = c(int.ref.umap.plts, map.query.umap.pl
 plot_E_H <- cowplot::plot_grid(plotlist = list(map.indrop2.query.umap.plts, conf.mtx.indrop2.heat,
                                                map.smartseq2.query.umap.plts, conf.mtx.smartseq2.heat), 
                                nrow = 2, align = "vh", rel_heights = c(0.45, 0.55), rel_widths = c(0.55, 0.45))
-pdf(file = file.path(res.dir[1], "figure_4_A_H.pdf"), width = 9.25, height = 11)
+pdf(file = file.path(res.dir[1], "figure_4_A_H.pdf"), width = 11, height = 12.5) #width = 9.25
 cowplot::plot_grid(plot_A_C, plot_B_D, plot_E_H, ncol = 1, rel_heights = c(0.225, 0.38, 0.45))
 dev.off()
 
